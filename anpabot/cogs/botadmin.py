@@ -10,7 +10,8 @@ class BotAdmin(commands.Cog):
         self._config = config
 
     @commands.command()
-    async def add_admin(self, ctx, role_name):
+    async def add_admin(self, ctx, role_name: str):
+        """Add role to control the bot, use like: `add_admin admin_role`"""
         if self._config.is_admin(ctx.author):
             self._config.add_admin(ctx.guild, role_name)
             await ctx.channel.send(f'Added role {role_name} as bot admin')
