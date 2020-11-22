@@ -1,13 +1,16 @@
-# worker.py
 
 import os
-import discord
 
 from dotenv import load_dotenv
-from src.anpaclient import AnpaClient
+from anpabot.anpa import Anpa
+from anpabot.cogs.botadmin import BotAdmin
+from anpabot.configstore import ConfigStore
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-client = AnpaClient()
-client.run(TOKEN)
+configStore = ConfigStore()
+anpaBot = Anpa(command_prefix='!anpa ')
+anpaBot.add_config_store(configStore)
+anpaBot.add_cog(BotAdmin(anpaBot, configStore))
+anpaBot.run(TOKEN)
