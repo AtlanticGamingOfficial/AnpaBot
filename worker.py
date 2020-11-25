@@ -8,8 +8,9 @@ from anpabot.configstore import ConfigStore
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+DATABASE_URL = os.getenv('DATABASE_URL')
 
-configStore = ConfigStore()
+configStore = ConfigStore(DATABASE_URL)
 anpaBot = Anpa(command_prefix='!anpa ')
 anpaBot.add_config_store(configStore)
 anpaBot.add_cog(BotAdmin(anpaBot, configStore))

@@ -1,13 +1,17 @@
 
 import discord
-from peewee import SqliteDatabase, Model, IntegerField, CharField
-
+from peewee import PostgresqlDatabase, Model, BigIntegerField, CharField
+from playhouse.db_url import connect
 
 class ConfigStore:
+    def __init__(self, database_url: str):
+        # self._database_url=database_url
+        self.db = connect(database_url)
+        self.db.bind([BotAdminRole])
 
     def init_guild(self, guild: discord.Guild):
-        db.connect()
-        db.create_tables([BotAdminRole])
+        self.db.connect()
+        self.db.create_tables([BotAdminRole])
 
     def is_admin(self, member: discord.Member):
         # Check for roles enabled to control the bot
@@ -38,14 +42,6 @@ class ConfigStore:
         else:
             print(f'Role {role} already exists in guild {guild.id}')
 
-
-
-db = SqliteDatabase(f'botadmins.db')
-
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-class BotAdminRole(BaseModel):
-    guild_id = IntegerField(unique=False)
+class BotAdminRole(Model):
+    guild_id = BigIntegerField(unique=False)
     role = CharField(unique=False)
