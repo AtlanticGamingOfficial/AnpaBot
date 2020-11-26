@@ -5,7 +5,6 @@ from playhouse.db_url import connect
 
 class ConfigStore:
     def __init__(self, database_url: str):
-        # self._database_url=database_url
         self.db = connect(database_url)
         self.db.bind([BotAdminRole, DefaultRole, MemberRole])
         self.db.connect()
@@ -84,6 +83,38 @@ class ConfigStore:
         roles = list(DefaultRole
             .select()
             .where(DefaultRole.guild_id == guild.id))
+        if (any(roles) == False):
+            return None
+        else:
+            role = self._get_role_by_id(guild, roles[0].role_id)
+            return role
+
+    def set_member_role(self, guild: discord.Guild, rolename):
+        role = self._get_role_by_name(guild, rolename)
+        if role == None:
+            print(f'Role {rolename} doesn\'t exists in guild {guild.name}#{guild.id}')
+            return f'Role {rolename} doesn\'t exists in guild {guild.name}'
+        roles = (MemberRole
+            .select()
+            .where(MemberRole.guild_id == guild.id, MemberRole.role_id == role.id))
+        if (any(roles) == False):
+            MemberRole.create(guild_id=guild.id, role_id=role.id, role_name=role.name)
+            print(f'Setting member role {role} for guild {guild.name}#{guild.id}')
+            return f'Setting member role {rolename} for guild {guild.name}'
+        else:
+            if (len(roles) > 1):
+                print(f'Too many member roles for guild {guild.name}#{guild.id}')
+                return f'Too many member roles for guild {guild.name}'
+            role[0].role_id = role.id
+            role[0].role_name = role.name
+            role[0].save()
+            print(f'Setting member role {role} for guild {guild.name}#{guild.id}')
+            return f'Setting member role {rolename} for guild {guild.name}'
+
+    def get_member_role(self, guild: discord.Guild):
+        roles = list(MemberRole
+            .select()
+            .where(MemberRole.guild_id == guild.id))
         if (any(roles) == False):
             return None
         else:

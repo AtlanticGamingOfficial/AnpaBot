@@ -11,6 +11,7 @@ class Debug(commands.Cog):
 
     @commands.command()
     async def on_member_join(self, ctx):
+        """Debug command to simulate the event of a user joining the server on yourself"""
         print('on_member_join')
         member = ctx.message.author
         default_role = self._config.get_default_role(ctx.guild)
