@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from anpabot.anpa import Anpa
 from anpabot.cogs.botadmin import BotAdmin
+from anpabot.cogs.debug import Debug
 from anpabot.configstore import ConfigStore
 
 load_dotenv()
@@ -14,4 +15,5 @@ configStore = ConfigStore(DATABASE_URL)
 anpaBot = Anpa(command_prefix='!anpa ')
 anpaBot.add_config_store(configStore)
 anpaBot.add_cog(BotAdmin(anpaBot, configStore))
+anpaBot.add_cog(Debug(anpaBot, configStore))
 anpaBot.run(TOKEN)
