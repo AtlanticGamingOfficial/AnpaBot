@@ -1,11 +1,11 @@
-
 from discord.ext import commands
 from discord.ext.commands import Bot
 from anpabot.persistence.configstore import ConfigStore
 
-
 """Module to manage the anpabot"""
-class BotAdmin(commands.Cog):
+
+
+class BotAdmin(commands.Cog, name='0. Bot Admin'):
     def __init__(self, bot: Bot, config: ConfigStore):
         self.bot = bot
         self._config = config

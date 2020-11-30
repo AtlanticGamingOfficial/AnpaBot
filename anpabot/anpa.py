@@ -12,8 +12,9 @@ class Anpa(Bot):
         print(f'{self.user} has connected to Discord!')
 
     async def on_member_join(self, member):
-        default_role = self._repo.get_default_role(member.guild)
-        if default_role is not None and default_role not in member.roles:
-            await member.add_roles(default_role)
+        default_roles = self._repo.get_default_roles(member.guild)
+        if any(default_roles):
+            for r in default_roles:
+                await member.add_roles(r, 'AnpaBot: user joined the server')
             await member.create_dm()
-            await member.dm_channel.send(f'Welcome to {member.guild.name}, you have been added to the {default_role.name} group')
+            await member.dm_channel.send(f'Welcome to \'{member.guild.name}\', you have been added to the \'{"\', \'".join([r.name for r in default_roles])}\' groups')

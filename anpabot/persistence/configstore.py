@@ -31,15 +31,12 @@ class ConfigStore:
     def add_admin(guild: discord.Guild, rolename) -> str:
         role = _get_role_by_name(guild, rolename)
         if role is None:
-            print(f'Role {rolename} doesn\'t exists in guild {guild.name}#{guild.id}')
-            return f'Role {rolename} doesn\'t exists in guild {guild.name}'
+            return f'Role \'{rolename}\' doesn\'t exists in guild \'{guild.name}\''
         roles = (BotAdminRole
                  .select()
                  .where(BotAdminRole.guild_id == guild.id, BotAdminRole.role_id == role.id))
         if not any(roles):
             BotAdminRole.create(guild_id=guild.id, role_id=role.id, role_name=role.name)
-            print(f'Adding role {role} to guild {guild.id}')
-            return f'Added role {rolename} as bot admin'
+            return f'Added role \'{rolename}\' as bot admin'
         else:
-            print(f'Role {role} already exists in guild {guild.name}#{guild.id}')
-            return f'Role {rolename} already exists in guild {guild.name}'
+            return f'Role \'{rolename}\' already exists in guild \'{guild.name}\''

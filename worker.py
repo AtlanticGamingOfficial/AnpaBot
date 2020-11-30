@@ -9,8 +9,8 @@ from playhouse.db_url import connect
 from anpabot.anpa import Anpa
 from anpabot.cogs.botadmin import BotAdmin
 from anpabot.cogs.debug import Debug
-from anpabot.cogs.newmembers import NewMembers
-from anpabot.cogs.rules import Rules
+from anpabot.cogs.newjoiners import NewJoiners
+from anpabot.cogs.acceptrules import AcceptRules
 from anpabot.persistence.configstore import ConfigStore
 from anpabot.persistence.defaultrolesrepo import DefaultRolesRepo
 from anpabot.persistence.memberrolesrepo import MemberRolesRepo
@@ -41,7 +41,7 @@ memRolesRepo = MemberRolesRepo()
 anpaBot.add_defrolesrepo(defRolesRepo)
 anpaBot.add_cog(BotAdmin(anpaBot, configStore))
 anpaBot.add_cog(Debug(anpaBot, defRolesRepo))
-anpaBot.add_cog(NewMembers(anpaBot, defRolesRepo, configStore))
-anpaBot.add_cog(Rules(anpaBot, memRolesRepo, configStore))
+anpaBot.add_cog(NewJoiners(anpaBot, defRolesRepo, configStore))
+anpaBot.add_cog(AcceptRules(anpaBot, memRolesRepo, configStore))
 
 anpaBot.run(TOKEN)
