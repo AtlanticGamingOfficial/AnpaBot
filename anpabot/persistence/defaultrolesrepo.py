@@ -11,13 +11,13 @@ class DefaultRolesRepo:
     def add_default_role(guild: discord.Guild, role_name: str) -> str:
         role = _get_role_by_name(guild, role_name)
         if role is None:
-            return f'Role {role_name} doesn\'t exists'
+            return 'Role "{0}" doesn"t exists'.format(role_name)
         roles = (DefaultRole
                  .select()
                  .where(DefaultRole.guild_id == guild.id, DefaultRole.role_id == role.id))
         if not any(roles):
             DefaultRole.create(guild_id=guild.id, role_id=role.id, role_name=role.name)
-            return f'Adding default role {role_name}'
+            return 'Adding default role "{0}"'.format(role_name)
         else:
             return 'Default role already configured'
 
@@ -25,7 +25,7 @@ class DefaultRolesRepo:
     def del_default_role(guild: discord.Guild, role_name: str) -> str:
         role = _get_role_by_name(guild, role_name)
         if role is None:
-            return f'Role {role_name} doesn\'t exists'
+            return 'Role "{0}" doesn"t exists'.format(role_name)
         roles = (DefaultRole
                  .select()
                  .where(DefaultRole.guild_id == guild.id, DefaultRole.role_id == role.id))
@@ -33,7 +33,7 @@ class DefaultRolesRepo:
             return 'Role not configured'
         else:
             roles[0].delete_instance()
-            return f'Removed default role {role_name}'
+            return 'Removed default role "{0}"'.format(role_name)
 
     @staticmethod
     def get_default_roles(guild: discord.Guild) -> [discord.Role]:

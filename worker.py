@@ -40,7 +40,7 @@ memRolesRepo = MemberRolesRepo()
 
 anpaBot.add_defrolesrepo(defRolesRepo)
 anpaBot.add_cog(BotAdmin(anpaBot, configStore))
-anpaBot.add_cog(Debug(anpaBot, defRolesRepo))
+anpaBot.add_cog(Debug(anpaBot, defRolesRepo, configStore))
 anpaBot.add_cog(NewJoiners(anpaBot, defRolesRepo, configStore))
 anpaBot.add_cog(AcceptRules(anpaBot, memRolesRepo, configStore))
 
