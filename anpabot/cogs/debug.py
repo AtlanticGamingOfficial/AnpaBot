@@ -25,5 +25,5 @@ class Debug(Cog, name='0. Debug'):
             for r in default_roles:
                 await member.add_roles(r, reason='AnpaBot: user joined the server')
             await member.create_dm()
-            await member.dm_channel.send('Welcome to "{0}", you have been added to the "{1}" groups'
+            await member.dm_channel.send('Welcome to "{0}", you have been added to the following groups: "{1}"'
                                          .format(member.guild.name, "\", \"".join([r.name for r in default_roles])))
