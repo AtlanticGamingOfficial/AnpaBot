@@ -1,5 +1,8 @@
 # Custom
 .DS_Store
+.idea
+*.db
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
