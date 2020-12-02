@@ -8,6 +8,7 @@ from playhouse.db_url import connect
 
 from anpabot.anpa import Anpa
 from anpabot.cogs.botadmin import BotAdmin
+from anpabot.cogs.broadcast import Broadcast
 from anpabot.cogs.debug import Debug
 from anpabot.cogs.newjoiners import NewJoiners
 from anpabot.cogs.acceptrules import AcceptRules
@@ -43,5 +44,6 @@ anpaBot.add_cog(BotAdmin(anpaBot, configStore))
 anpaBot.add_cog(Debug(anpaBot, defRolesRepo, configStore))
 anpaBot.add_cog(NewJoiners(anpaBot, defRolesRepo, configStore))
 anpaBot.add_cog(AcceptRules(anpaBot, memRolesRepo, configStore))
+anpaBot.add_cog(Broadcast(anpaBot, configStore))
 
 anpaBot.run(TOKEN)
