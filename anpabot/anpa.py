@@ -1,5 +1,7 @@
 
-from discord.ext.commands import Bot
+import discord
+
+from discord.ext.commands import Bot, Context
 from discord.ext.commands.errors import CheckFailure
 
 from anpabot.persistence.defaultrolesrepo import DefaultRolesRepo
@@ -13,13 +15,13 @@ class Anpa(Bot):
     async def on_ready(self):
         print(f'{self.user} has connected to Discord!')
 
-    async def on_command_error(self, ctx, error: CheckFailure):
+    async def on_command_error(self, ctx: Context, error: CheckFailure):
         if isinstance(error, CheckFailure):
             await ctx.channel.send(f'Sorry {ctx.author.display_name} you don"t have permissions')
         else:
             await ctx.channel.send(f'Error :{error}')
 
-    async def on_member_join(self, member):
+    async def on_member_join(self, member: discord.Member):
         default_roles = self._repo.get_default_roles(member.guild)
         if any(default_roles):
             for r in default_roles:

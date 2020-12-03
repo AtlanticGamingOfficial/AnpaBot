@@ -1,5 +1,5 @@
 
-from discord.ext.commands import Bot, Cog, command
+from discord.ext.commands import Bot, Cog, command, Context
 
 from anpabot.cogs import check_is_admin
 from anpabot.persistence.configstore import ConfigStore
@@ -15,7 +15,7 @@ class AcceptRules(Cog, name='1. Accept Rules'):
         self._config = config
 
     @command()
-    async def acceptrules(self, ctx):
+    async def acceptrules(self, ctx: Context):
         """Use this command to accept the server rules"""
         member = ctx.message.author
         member_roles = self._repo.get_member_roles(ctx.guild)
@@ -29,21 +29,21 @@ class AcceptRules(Cog, name='1. Accept Rules'):
 
     @command()
     @check_is_admin()
-    async def addmemberrole(self, ctx, role_name: str):
+    async def addmemberrole(self, ctx: Context, role_name: str):
         """Add role for members after accepting the rules, use like: `addmemberrole member_role`"""
         message = self._repo.add_member_role(ctx.guild, role_name)
         await ctx.channel.send(message)
 
     @command()
     @check_is_admin()
-    async def delmemberrole(self, ctx, role_name: str):
+    async def delmemberrole(self, ctx: Context, role_name: str):
         """Remove role for members after accepting the rules, use like: `delmemberrole member_role`"""
         message = self._repo.del_member_role(ctx.guild, role_name)
         await ctx.channel.send(message)
 
     @command()
     @check_is_admin()
-    async def getmemberroles(self, ctx):
+    async def getmemberroles(self, ctx: Context):
         """Get roles for new members"""
         member_roles = self._repo.get_member_roles(ctx.guild)
         await ctx.channel.send('Member roles on accepting the rules are "{0}"'

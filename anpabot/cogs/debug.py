@@ -1,5 +1,5 @@
 
-from discord.ext.commands import Bot, Cog, command
+from discord.ext.commands import Bot, Cog, command, Context
 
 from anpabot.cogs import check_is_admin
 from anpabot.persistence.configstore import ConfigStore
@@ -16,7 +16,7 @@ class Debug(Cog, name='0. Debug'):
 
     @command()
     @check_is_admin()
-    async def on_member_join(self, ctx):
+    async def on_member_join(self, ctx: Context):
         """Debug command to simulate the event of a user joining the server on yourself"""
         print('simulating on_member_join')
         member = ctx.message.author
