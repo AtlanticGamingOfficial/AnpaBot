@@ -29,7 +29,7 @@ class Broadcast(Cog, name='2. Broadcast'):
         if not _has_role(member, role) and not _is_admin(ctx):
             return await ctx.channel.send('You are not in the group "{0}"'.format(role_name))
 
-        broadcastlimit = 100
+        broadcastlimit = 1000
         if len(role.members) > broadcastlimit:
             return await ctx.channel.send('There are "{0}" users in {1}, broadcast is limited to {2}'.format(len(role.members), role.name, broadcastlimit))
 
