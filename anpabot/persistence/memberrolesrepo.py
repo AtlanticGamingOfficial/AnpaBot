@@ -11,13 +11,13 @@ class MemberRolesRepo:
     def add_member_role(guild: discord.Guild, role_name: str) -> str:
         role = _get_role_by_name(guild, role_name)
         if role is None:
-            return 'Role "{0}" doesn"t exists'.format(role_name)
+            return 'Role "{0}" doesn"t exists'.format(role.name)
         roles = (MemberRole
                  .select()
                  .where(MemberRole.guild_id == guild.id, MemberRole.role_id == role.id))
         if not any(roles):
             MemberRole.create(guild_id=guild.id, role_id=role.id, role_name=role.name)
-            return 'Adding member role "{0}"'.format(role_name)
+            return 'Adding member role "{0}"'.format(role.name)
         else:
             return 'Role already configured'
 
@@ -25,7 +25,7 @@ class MemberRolesRepo:
     def del_member_role(guild: discord.Guild, role_name: str) -> str:
         role = _get_role_by_name(guild, role_name)
         if role is None:
-            return 'Role "{0}" doesn"t exists'.format(role_name)
+            return 'Role "{0}" doesn"t exists'.format(role.name)
         roles = (MemberRole
                  .select()
                  .where(MemberRole.guild_id == guild.id, MemberRole.role_id == role.id))
@@ -33,7 +33,7 @@ class MemberRolesRepo:
             return 'Role not set'
         else:
             roles[0].delete_instance()
-            return 'Removed member role "{0}"'.format(role_name)
+            return 'Removed member role "{0}"'.format(role.name)
 
     @staticmethod
     def get_member_roles(guild: discord.Guild) -> [discord.Role]:
