@@ -1,10 +1,9 @@
 
-from discord.ext.commands import Bot, Cog, command
+from discord.ext.commands import Bot, Cog, command, Context
 
-from anpabot.cogs import check_is_admin, _has_role, _is_admin
+from anpabot.cogs import _has_role, _is_admin
 from anpabot.persistence import _get_role_by_name
 from anpabot.persistence.configstore import ConfigStore
-from anpabot.persistence.defaultrolesrepo import DefaultRolesRepo
 
 """Broadcast module"""
 
@@ -15,7 +14,7 @@ class Broadcast(Cog, name='2. Broadcast'):
         self._config = config
 
     @command()
-    async def groupmessage(self, ctx, role_name, message):
+    async def groupmessage(self, ctx: Context, role_name: str, message: str):
         """Broadcast a message to a group you belong to, es `groupmessage mygroup`"""
         if message is None or len(message) <= 2:
             return await ctx.channel.send('Message "{0}" is too short'.format(message))
@@ -24,10 +23,10 @@ class Broadcast(Cog, name='2. Broadcast'):
         role = _get_role_by_name(member.guild, role_name)
 
         if role is None:
-            return await ctx.channel.send('Group "{0}" doesn\'t exists'.format(role_name))
+            return await ctx.channel.send('Group "{0}" doesn\'t exists'.format(role.name))
 
         if not _has_role(member, role) and not _is_admin(ctx):
-            return await ctx.channel.send('You are not in the group "{0}"'.format(role_name))
+            return await ctx.channel.send('You are not in the group "{0}"'.format(role.name))
 
         broadcastlimit = 1000
         if len(role.members) > broadcastlimit:
