@@ -18,3 +18,10 @@ class BotAdmin(Cog, name='0. Bot Admin'):
         """Add role to control the bot, use like: `addadmin admin_role`"""
         message = self._config.add_admin(ctx.guild, role_name)
         await ctx.channel.send(message)
+
+    @command()
+    @check_is_admin()
+    async def remove_admin(self, ctx, role_name: str):
+        """Remove role which control the bot, use like: `removeadmin admin_role`"""
+        message = self._config.add_admin(ctx.guild, role_name)
+        await ctx.channel.send(message)
