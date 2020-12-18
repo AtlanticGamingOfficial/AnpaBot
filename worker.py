@@ -33,7 +33,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 
-anpaBot = Anpa(intents=intents, command_prefix='!anpa ')
+anpaBot = Anpa(intents=intents, command_prefix='!a ')
 
 configStore = ConfigStore()
 defRolesRepo = DefaultRolesRepo()
