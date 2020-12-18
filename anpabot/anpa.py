@@ -26,6 +26,6 @@ class Anpa(Bot):
         if any(default_roles):
             for r in default_roles:
                 await member.add_roles(r, reason='AnpaBot: user joined the server')
-            await member.create_dm()
-            await member.dm_channel.send('Welcome to "{0}", you have been added to the following groups: "{1}"'
-                                         .format(member.guild.name, "\", \"".join([r.name for r in default_roles])))
+            # await member.create_dm()
+            # await member.dm_channel.send('Welcome to "{0}", you have been added to the following groups: "{1}"'
+            #                              .format(member.guild.name, "\", \"".join([r.name for r in default_roles])))
